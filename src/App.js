@@ -2,23 +2,17 @@ import { useState } from 'react';
 import './App.css';
 
 function App() {
-  const [input, setInput]= useState(0);
-  const [secondInput, setSecondInput] = useState(0)
+  const [input, setInput]= useState('');
+  const [secondInput, setSecondInput] = useState('')
   const [result, setResult] = useState(0)
   const [formula, setFormula] = useState("")
   console.log("The result is ", result)
   const handleClick = (e) =>{
     const value = e.target.value
-    if(input.length >= 3){
-      setSecondInput(value)
-    }if(input === 0){
-      setInput(value)
-    }if(input.length < 3){
-      setInput(input + value)
-    }if(secondInput.length < 3){
+    if(formula === "+" || formula === "-" || formula === "*" || formula === "/"){
       setSecondInput(secondInput + value)
-    }if(secondInput.length >= 3){
-      setResult("Please pick a formula")
+    }else{
+        setInput(input + value)
     }
   }
   const handleFormula = (e) =>{
@@ -58,6 +52,10 @@ function App() {
       setResult(parseInt(input) / parseInt(secondInput))
     }
   }
+  const final = () =>{
+    setInput(input.slice(1))
+    setSecondInput(secondInput.slice(1))
+  }
   return (
     <div className="App" style={{textAlign: "center"}}>
       <div>
@@ -68,6 +66,7 @@ function App() {
       <div>
         <button onClick={clear} value={"clear"} >C</button>
         <button onClick={equal}>=</button>
+        <button onClick={final}>f</button>
       </div>
       <div>
         <button onClick={handleFormula} value={"+"}>+</button>
@@ -98,7 +97,7 @@ function App() {
       <div style={{ position: "absolute",
                     bottom: "0",
                     left: "50%",
-                    transform: "translateX(-50%)",}}>For using the keyboard both numbers have to be 3 numbers long</div>
+                    transform: "translateX(-50%)",}}>To get your final equation going through the calculator press f</div>
     </div>
   );
 }
